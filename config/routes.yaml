@@ -1,5 +1,19 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+# config/routes.yaml
+app_home:
+  path: /
+  controller: App\Controller\VatCalculatorController::index
+
+app_calculate:
+  path: /calculate
+  controller: App\Controller\VatCalculatorController::calculate
+  methods: POST
+
+app_clear_history:
+  path: /clear-history
+  controller: App\Controller\VatCalculatorController::clearHistory
+  methods: POST
+
+app_export_csv:
+  path: /export-csv
+  controller: App\Controller\VatCalculatorController::exportCsv
+  methods: GET

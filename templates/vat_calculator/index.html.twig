@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>VAT Calculator</h1>
+
+    <h2>Calculate VAT</h2>
+    <form method="post" action="{{ path('app_calculate') }}">
+        <div>
+            <label for="value">Value:</label>
+            <input type="text" id="value" name="value" required>
+        </div>
+        <div>
+            <label for="vat_rate">VAT Rate (%):</label>
+            <input type="text" id="vat_rate" name="vat_rate" required>
+        </div>
+        <button type="submit">Calculate</button>
+    </form>
+
+    <h2>History</h2>
+    {% if calculations is not empty %}
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Value</th>
+                    <th>VAT Rate</th>
+                    <th>Ex VAT Value</th>
+                    <th>Inc VAT Value</th>
+                    <th>VAT Amount</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for calculation in calculations %}
+                    <tr>
+                        <td>{{ calculation.id }}</td>
+                        <td>{{ calculation.value }}</td>
+                        <td>{{ calculation.vatRate }}</td>
+                        <td>{{ calculation.exVatValue }}</td>
+                        <td>{{ calculation.incVatValue }}</td>
+                        <td>{{ calculation.vatAmount }}</td>
+                        <td>{{ calculation.createdAt|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No calculations found.</p>
+    {% endif %}
+
+    <form method="post" action="{{ path('app_clear_history') }}">
+        <button type="submit">Clear History</button>
+    </form>
+
+    <a href="{{ path('app_export_csv') }}">Export CSV</a>
+{% endblock %}
